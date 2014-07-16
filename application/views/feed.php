@@ -17,6 +17,7 @@
 								}else{
 									echo '<span class="afterlike_messages">You&#39;ve Spread The Word!</span>';
 								}
+								echo '<span class="likecount_spans">'.$item['likes'].'</span>';
 							echo '</div>';
 				
 				?>
