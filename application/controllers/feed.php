@@ -19,6 +19,22 @@ class Feed extends CI_Controller
 		if($query->num_rows() > 0){	//Existing & Returning User
 			$row = $query->row_array(); 
 			$data['ipID'] = $row['ID'];
+			$curlong = $row['longitude'];
+			$curlat = $row['latitude'];
+			
+			//+0.1?
+			//Need to see if scalable.
+			$sql = "SELECT ID, message, latitude, longitude, likes, timestamp, 
+									((likes+0.1) / ( LN(TIMESTAMPDIFF(SECOND, feeds.timestamp, CURRENT_TIMESTAMP())) * POW(( 3959 * acos( cos( radians(".$curlat.") ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(".$curlong.") ) + sin( radians(".$curlat.") ) * sin( radians( latitude ) ) ) )+0.1,2))) AS rank  
+									FROM feeds
+									ORDER BY rank DESC
+									LIMIT 0,20";
+			echo $sql;
+			//To search by kilometers instead of miles, replace 3959 with 6371.
+			$query = $this->db->query($sql);
+
+			$data['feeds'] = $query->result_array();
+			
 			//$ipID = $row['ID'];
 		}else{	//New User
 			$this->load->view('setup');
@@ -32,6 +48,8 @@ class Feed extends CI_Controller
 			//$ipID = $insert_id;
 			*/
 		}
+		
+		
 		
         $this->load->view('feed',$data);
     }
