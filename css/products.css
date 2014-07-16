@@ -1,0 +1,37 @@
+#products_main_div{
+    border: 1px solid black;
+}
+
+#products_typetitle_div{
+    display:block;
+}
+
+.products_single_divs{
+    display: inline-block;
+    vertical-align: top;
+    height: 340px;
+    width: 300px;
+    border: 1px solid grey;
+}
+
+.products_images{
+    display: block;
+    max-width:300px;
+    max-height:300px;
+    width: auto;
+    height: auto;
+}
+
+.preview_images{
+    display: inline-block;
+    vertical-align: top;
+    max-width:500px;
+    max-height:500px;
+    width: auto;
+    height: auto;
+}
+
+.preview_info_divs{
+    display: inline-block;
+    vertical-align: top;
+}

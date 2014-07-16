@@ -1,0 +1,32 @@
+.chat_products_images{
+    display: block;
+    max-width:75px;
+    max-height:75px;
+    width: auto;
+    height: auto;
+}
+
+.chat_chatbox_divs{
+    display: inline-block;
+    height: 285px;
+    width: 260px;
+    border: 1px solid blue;
+}
+
+.chat_chatboxtext_divs{
+    height: 230px;
+    width: 260px;
+    /*border: 1px solid rgba(29, 49, 91, .3);*/
+    background-color: #edeff4;
+}
+
+.chat_chatboxtitle_divs{
+    height: 28px;
+    width: 260px;
+}
+
+.chat_chatboxinput_inputs{
+    height: 27px;
+    width: 260px;
+}
+
