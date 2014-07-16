@@ -29,7 +29,7 @@ class Feed extends CI_Controller
 									FROM feeds
 									ORDER BY rank DESC
 									LIMIT 0,20";
-			echo $sql;
+			//echo $sql;
 			//To search by kilometers instead of miles, replace 3959 with 6371.
 			$query = $this->db->query($sql);
 
