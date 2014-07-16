@@ -7,7 +7,8 @@ $('#setup_button').click(function(){
 		type: 'POST',
 		data: {latitude: latitude, longitude: longitude},
 		success: function(data){
-			alert("Success!");
+			alert("Successfully Updated!");
+			window.location.replace("http://localhost/index.php/feed/");
 		}
 	});
 });

@@ -4,7 +4,7 @@
 	</head>
 	<body>
 		<div id="location_service_confirmation_message">Make sure to turn on your location services.</div>
-		<button id="setup_button">Set Up</button>'
+		<button id="setup_button">Set Up</button>
 		<input type="hidden" id="input_lat_hidden" />
 		<input type="hidden" id="input_long_hidden" />
 	
