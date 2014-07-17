@@ -1,23 +1,67 @@
-$('#feed_input_text').keypress(function(e){
-    if(e.which==13){
-        var message = $(this).val();
-        $(this).val('');
-        $(this).focus();
+$('#feed_input_textarea').autosize();
+
+$('#feed_submit_button').click(function(){
+	var message = $('#feed_input_textarea').val();
+	$('#feed_input_textarea').val('');
+	$('#feed_input_textarea').focus();
+	if(!message.trim()){	//is empty or whitespace
+		alert("Can't be empty!");
+	}else{
 		var latitude = $('#input_lat_hidden').val();
 		var longitude = $('#input_long_hidden').val();
+		
+		$.ajax({
+			url: '/index.php/feed/add_feed/',
+			type: 'POST',
+			data: {latitude: latitude, longitude: longitude, message: message},
+			success: function(data){
+				//alert("Success!");
+				$("#refresh_button").click();
+			}
+		});
+	}
+});
 
-        
-        $.ajax({
-            url: '/index.php/feed/add_feed/'+message,
-            context: this,
-            type: 'POST',
-            data: {latitude: latitude, longitude: longitude},
-            success: function(data){
-                alert("Success!");
-            }
-        });
-        
-    }
+$('#refresh_button').click(function(){
+	//show loading gif
+	var opts = {
+	  lines: 13, // The number of lines to draw
+	  length: 20, // The length of each line
+	  width: 10, // The line thickness
+	  radius: 30, // The radius of the inner circle
+	  corners: 1, // Corner roundness (0..1)
+	  rotate: 0, // The rotation offset
+	  direction: 1, // 1: clockwise, -1: counterclockwise
+	  color: '#000', // #rgb or #rrggbb or array of colors
+	  speed: 1, // Rounds per second
+	  trail: 60, // Afterglow percentage
+	  shadow: false, // Whether to render a shadow
+	  hwaccel: false, // Whether to use hardware acceleration
+	  className: 'spinner', // The CSS class to assign to the spinner
+	  zIndex: 2e9, // The z-index (defaults to 2000000000)
+	  top: '50%', // Top position relative to parent
+	  left: '50%' // Left position relative to parent
+	};
+	var target = document.getElementById('loading_image');
+	var spinner = new Spinner(opts).spin(target);
+	
+	//alert("sd");
+	var latitude = $('#input_lat_hidden').val();
+	var longitude = $('#input_long_hidden').val();
+
+
+	$.ajax({
+		url: '/index.php/feed/refresh_feed/',
+		type: 'POST',
+		data: {latitude: latitude, longitude: longitude},
+		success: function(data){
+			//alert("Successfully Refreshed!");
+			//Hide loading gif
+			spinner.stop();
+			$('#feed_main_div').html(data);
+		}
+	});
+	
 });
 
 $('.like_buttons').click(function(e){
@@ -29,9 +73,9 @@ $('.like_buttons').click(function(e){
 		url: '/index.php/feed/spread_feed/'+id,
 		context: this,
 		success: function(data){
-			alert("Successfully Spread!");
+			//alert("Successfully Spread!");
 			$(this).hide();
-			$(this).parent().append('<span class="afterlike_messages">You&#39;ve Spread The Word!</span>');
+			$(this).parent().append('<span class="afterlike_messages">The word has been spread!</span>');
 		}
 	});
 	
@@ -51,13 +95,20 @@ function showMap(position) {
 	//alert("sds");
 	$('#input_lat_hidden').val(position.coords.latitude);
 	$('#input_long_hidden').val(position.coords.longitude);
+	
+	var cityname = getCityName(position.coords.latitude,position.coords.longitude,function(cityname){
+		//alert(cityname);
+		$('#feed_city_information').html('The word around <b>'+cityname+'</b> is...'+'<button id="refresh_button"><i class="fa fa-refresh"></i> Refresh</button>');
+	});
+	
+	
 	$.ajax({
 		url: '/index.php/feed/add_ip/',
 		type: 'POST',
 		data: {latitude: position.coords.latitude, longitude: position.coords.longitude},
 		context: this,
 		success: function(data){
-			alert(data);
+			//alert(data);
 		}
 	});
 }
@@ -77,6 +128,44 @@ function showError(error) {
 			alert("An unknown error occurred.");
 			break;
 	}
+}
+
+function getCityName(lat, lng, callback) {
+	geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(lat, lng);
+	var city;
+    geocoder.geocode({'location': latlng}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+		//alert("good");
+        if (results[1]) {
+         //formatted address
+         //alert(results[0].formatted_address)
+        //find country name
+            for (var i=0; i<results[0].address_components.length; i++) {
+			//alert(results[0].address_components[i].long_name);
+            for (var b=0;b<results[0].address_components[i].types.length;b++) {
+				//alert(results[0].address_components[i].types[b]);
+            //there are different types that might hold a city admin_area_lvl_1 usually does in come cases looking for sublocality type will be more appropriate
+                if (results[0].address_components[i].types[b] == "sublocality") {
+                    //this is the object you are looking for
+                    city= results[0].address_components[i];
+					//alert(city.long_name);
+					callback(city.long_name);
+                    break;
+                }
+            }
+        }
+        //city data
+        
+
+
+        } else {
+          alert("No results found");
+        }
+      } else {
+        alert("Geocoder failed due to: " + status);
+      }
+    });
 }
 
 getLocation();

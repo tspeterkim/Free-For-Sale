@@ -5,13 +5,6 @@ class Feed extends CI_Controller
     public function index()
     {
 		//$query = $this->db->query("SELECT * FROM feeds");
-		$query = $this->db->query("SELECT ID, message, latitude, longitude, likes, timestamp, 
-									(likes / ( LN(TIMESTAMPDIFF(SECOND, feeds.timestamp, CURRENT_TIMESTAMP())) * POW(( 3959 * acos( cos( radians(37) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(-122) ) + sin( radians(37) ) * sin( radians( latitude ) ) ) ),2))) AS rank  
-									FROM feeds
-									ORDER BY rank DESC
-									LIMIT 0,20");
-
-        $data['feeds'] = $query->result_array();
 		
 		$ip = $this->get_client_ip();
 		$query = $this->db->query("SELECT * FROM ips WHERE ip='".$ip."'");
@@ -82,12 +75,13 @@ class Feed extends CI_Controller
 		}
 	}
 	
-    public function add_feed($message)
+    public function add_feed()
     {
         $latitude = $this->input->post('latitude');
         $longitude = $this->input->post('longitude');
+		$message  = $this->input->post('message');
         $data = array(
-           'message' => urldecode($message) ,
+           'message' => $message ,
            'latitude' => $latitude ,
            'longitude' => $longitude
         );
@@ -107,6 +101,46 @@ class Feed extends CI_Controller
 		$this->db->insert('likes', $data); 
 		
 		$query = $this->db->query("UPDATE feeds SET likes=likes+1 WHERE ID='".$id."'");
+	}
+	
+	public function refresh_feed()
+	{
+		$curlong = $this->input->post('longitude');
+		$curlat = $this->input->post('latitude');
+		$ip = $this->get_client_ip();
+		$query = $this->db->query("SELECT * FROM ips WHERE ip='".$ip."'");	
+		$row = $query->row_array(); 
+		$ipID = $row['ID'];
+			//+0.1?
+			//Need to see if scalable.
+		$sql = "SELECT ID, message, latitude, longitude, likes, timestamp, 
+								((likes+0.1) / ( LN(TIMESTAMPDIFF(SECOND, feeds.timestamp, CURRENT_TIMESTAMP())) * POW(( 3959 * acos( cos( radians(".$curlat.") ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(".$curlong.") ) + sin( radians(".$curlat.") ) * sin( radians( latitude ) ) ) )+0.1,2))) AS rank  
+								FROM feeds
+								ORDER BY rank DESC
+								LIMIT 0,20";
+		$query = $this->db->query($sql);
+		
+		//$con=mysqli_connect("localhost","root","","freeforsale");
+		foreach ($query->result_array() as $item){
+			echo '<div class="feed_items" id="feed_item_'.$item['ID'].'">
+						<div class="feed_item_messages">'.$item['message'].'</div>';
+						$q = $this->db->query("SELECT * FROM likes WHERE feedID='".$item['ID']."' AND ipID='".$ipID."'");
+						//$result = mysql_query($sql) or die(mysql_error());
+						//$row = mysql_fetch_array($result); 
+						//$num_results = mysql_num_rows($result);
+						if($q->num_rows() == 0){
+							echo '<a href="#" class="like_buttons">
+								<i class="fa fa-bullhorn"></i>
+								Spread
+								</a>';
+						}else{
+							echo '<span class="afterlike_messages">The word has been spread</span>';
+						}
+						
+						echo '<span class="likecount_spans"><span class="blueify">'.$item['likes'].'</span> Spreads</span>';
+					echo '</div>';
+		}
+
 	}
 	
 	public function get_client_ip() {

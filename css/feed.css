@@ -1,6 +1,100 @@
+html
+{
+	background-color:#e9eaed;
+	font-family: arial;
+}
+
+#container{
+	width:510px;
+	margin-top:15px;
+	margin-left: auto;
+    margin-right: auto;
+}
+
+button{
+	font-family:arial;
+}
+
+#main_title{
+	font-size:44px;
+	margin-bottom:25px;
+}
+
+#feed_submit_button{
+	float:right;
+	padding-left:14px;
+	padding-right:14px;
+	padding-bottom: 4px;
+	padding-top: 4px;
+	margin-top:4px;
+}
+
+#refresh_button{
+	float:right;
+}
+
+.like_buttons{color:#07c; text-decoration:none; font-size:13px;}      /* unvisited link */
+.like_buttons:visited {color:#07c;}  /* visited link */
+.like_buttons:hover {color:#07c; text-decoration:underline;}  /* mouse over link */
+.like_buttons:active {color:#07c;}  /* selected link */
+
+#feed_input_textarea{
+	resize: none;
+	width: 510px;
+	font-family: inherit;
+	font-size: inherit;
+	padding:12px;
+}
+
+hr {
+	border: 0;
+	height: 1px;
+	background: #333;
+	margin-top:50px;
+	background-image: -webkit-linear-gradient(left, #ccc, #333, #ccc);
+	background-image: -moz-linear-gradient(left, #ccc, #333, #ccc);
+	background-image: -ms-linear-gradient(left, #ccc, #333, #ccc);
+	background-image: -o-linear-gradient(left, #ccc, #333, #ccc);
+}
+
+#feed_city_information{
+	clear:right;
+	background: #fff;
+	border: 1px solid;
+	border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+	width: 484px;
+	margin-top:5px;
+	margin-bottom: 7px;
+	padding:12px;
+}
+
+#feed_main_div{
+	position:relative;
+	top:10px;
+}
+
+.feed_items{
+	background: #fff;
+	border: 1px solid;
+	border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+	width: 484px;
+	margin-bottom: 7px;
+	padding:12px;
+}
+
+.feed_item_messages{
+	margin-bottom:13px;
+}
+
 .afterlike_messages{
-	
+	color:#07c;
+	font-size:13px;
 }
 .likecount_spans{
+	float:right;
+	font-size:13px;
+}
 
+.blueify{
+	color:#07c;
 }

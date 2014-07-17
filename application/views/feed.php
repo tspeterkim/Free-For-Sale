@@ -1,33 +1,54 @@
 <html>
 	<head>
+		<title>Spread the word</title>
+		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
 		<link rel="stylesheet" type="text/css" href="/css/feed.css">
 	</head>
 	<body>
-		<div id="feed_main_div">
-			<?php $con=mysqli_connect("localhost","root","","freeforsale"); ?>
-			<?php foreach ($feeds as $item):?>
-				<?php echo '<div class="feed_items" id="feed_item_'.$item['ID'].'">
-								<span class="feed_item_messages">'.$item['message'].'</span>';
-								$sql = "SELECT * FROM likes WHERE feedID='".$item['ID']."' AND ipID='".$ipID."'";
-								$result = mysql_query($sql) or die(mysql_error());
-								$row = mysql_fetch_array($result); 
-								$num_results = mysql_num_rows($result);
-								if($num_results == 0){
-									echo '<a href="#" class="like_buttons">Spread</a>';
-								}else{
-									echo '<span class="afterlike_messages">You&#39;ve Spread The Word!</span>';
-								}
-								echo '<span class="likecount_spans">'.$item['likes'].'</span>';
-							echo '</div>';
-				
-				?>
-			<?php endforeach?>
+		<div id="container">
+			<div id="main_title">Spread The Word</div>
+			<textarea autofocus placeholder="Spread a new word..." maxlength="500" id="feed_input_textarea" ></textarea>
+			<br/><button id="feed_submit_button" class="pure-button pure-button-primary">Post</button>
+			<hr/>
+			<span id="loading_image"></span>
+			<div id="feed_city_information">&nbsp;
+				<button id="refresh_button">
+				<i class="fa fa-refresh"></i>
+				Refresh
+				</button>
+			</div>
+
+			<div id="feed_main_div">
+				<?php $con=mysqli_connect("localhost","root","","freeforsale"); ?>
+				<?php foreach ($feeds as $item):?>
+					<?php echo '<div class="feed_items" id="feed_item_'.$item['ID'].'">
+									<div class="feed_item_messages">'.$item['message'].'</div>';
+									$sql = "SELECT * FROM likes WHERE feedID='".$item['ID']."' AND ipID='".$ipID."'";
+									$result = mysql_query($sql) or die(mysql_error());
+									$row = mysql_fetch_array($result); 
+									$num_results = mysql_num_rows($result);
+									if($num_results == 0){
+										echo '<a href="#" class="like_buttons">
+										<i class="fa fa-bullhorn"></i>
+										Spread
+										</a>';
+									}else{
+										echo '<span class="afterlike_messages">The word has been spread</span>';
+									}
+									echo '<span class="likecount_spans"><span class="blueify">'.$item['likes'].'</span> Spreads</span>';
+								echo '</div>';
+					?>
+				<?php endforeach?>
+			</div>
 		</div>
-		<input type="text" id="feed_input_text" />
 		<input type="hidden" id="input_lat_hidden"/>
 		<input type="hidden" id="input_long_hidden"/>
 
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> 
+		<script src="/js/spin.min.js"></script>
+		<script src="/js/jquery.autosize.min.js"></script>
 		<script src="/js/feed.js"></script>
 	</body>
 </html>
