@@ -13,7 +13,7 @@
 			<hr/>
 			<span id="loading_image"></span>
 			<div id="feed_city_information">&nbsp;
-				<button id="refresh_button">
+				<button onclick="refresh_feed()" id="refresh_button">
 				<i class="fa fa-refresh"></i>
 				Refresh
 				</button>

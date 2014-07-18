@@ -16,12 +16,12 @@ $('#feed_submit_button').click(function(){
 			data: {latitude: latitude, longitude: longitude, message: message},
 			success: function(data){
 				//alert("Success!");
-				$("#refresh_button").click();
+				refresh_feed();
 			}
 		});
 	}
 });
-
+/*
 $('#refresh_button').click(function(){
 	//show loading gif
 	var opts = {
@@ -63,7 +63,7 @@ $('#refresh_button').click(function(){
 	});
 	
 });
-
+*/
 $('.like_buttons').click(function(e){
 	var itemname = $(this).parent().attr('id');
 	var id = itemname.substr(10);
@@ -79,9 +79,48 @@ $('.like_buttons').click(function(e){
 		}
 	});
 	
-
-	
 });
+
+function refresh_feed(){
+	//show loading gif
+	var opts = {
+	  lines: 13, // The number of lines to draw
+	  length: 20, // The length of each line
+	  width: 10, // The line thickness
+	  radius: 30, // The radius of the inner circle
+	  corners: 1, // Corner roundness (0..1)
+	  rotate: 0, // The rotation offset
+	  direction: 1, // 1: clockwise, -1: counterclockwise
+	  color: '#000', // #rgb or #rrggbb or array of colors
+	  speed: 1, // Rounds per second
+	  trail: 60, // Afterglow percentage
+	  shadow: false, // Whether to render a shadow
+	  hwaccel: false, // Whether to use hardware acceleration
+	  className: 'spinner', // The CSS class to assign to the spinner
+	  zIndex: 2e9, // The z-index (defaults to 2000000000)
+	  top: '50%', // Top position relative to parent
+	  left: '50%' // Left position relative to parent
+	};
+	var target = document.getElementById('loading_image');
+	var spinner = new Spinner(opts).spin(target);
+	
+	//alert("sd");
+	var latitude = $('#input_lat_hidden').val();
+	var longitude = $('#input_long_hidden').val();
+
+
+	$.ajax({
+		url: '/index.php/feed/refresh_feed/',
+		type: 'POST',
+		data: {latitude: latitude, longitude: longitude},
+		success: function(data){
+			//alert("Successfully Refreshed!");
+			//Hide loading gif
+			spinner.stop();
+			$('#feed_main_div').html(data);
+		}
+	});
+}
 
 function getLocation(){
 	if (navigator.geolocation) {
@@ -98,7 +137,7 @@ function showMap(position) {
 	
 	var cityname = getCityName(position.coords.latitude,position.coords.longitude,function(cityname){
 		//alert(cityname);
-		$('#feed_city_information').html('The word around <b>'+cityname+'</b> is...'+'<button id="refresh_button"><i class="fa fa-refresh"></i> Refresh</button>');
+		$('#feed_city_information').html('The word around <b>'+cityname+'</b> is...'+'<button onclick="refresh_feed()" id="refresh_button"><i class="fa fa-refresh"></i> Refresh</button>');
 	});
 	
 	
