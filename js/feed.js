@@ -16,12 +16,12 @@ $('#feed_submit_button').click(function(){
 			data: {latitude: latitude, longitude: longitude, message: message},
 			success: function(data){
 				//alert("Success!");
+				var n = noty({text: 'You spreaded a new word',type:'information',timeout:2000,layout:'topRight'});
 				refresh_feed();
 			}
 		});
 	}
 });
-
 
 $.fn.extend( {
 	limiter: function(limit, elem) {

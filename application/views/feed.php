@@ -50,6 +50,7 @@
 
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> 
+		<script type="text/javascript" src="/js/noty/packaged/jquery.noty.packaged.min.js"></script>
 		<script src="/js/spin.min.js"></script>
 		<script src="/js/jquery.autosize.min.js"></script>
 		<script src="/js/feed.js"></script>

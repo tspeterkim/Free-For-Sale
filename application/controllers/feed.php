@@ -20,7 +20,9 @@ class Feed extends CI_Controller
 					((1 / ((POW(( 3959 * acos( cos( radians(".$curlat.") ) * cos( radians( feeds.latitude ) ) * cos( radians( feeds.longitude ) - radians(".$curlong.") ) + sin( radians(".$curlat.") ) * sin( radians( feeds.latitude ) ) ) ),feeds.likes)) * (TIMESTAMPDIFF(SECOND, feeds.timestamp, CURRENT_TIMESTAMP())))) + (ips.user_likes/50)) AS rank
 					FROM feeds
 					INNER JOIN ips
-					ON feeds.ipID=ips.ID";
+					ON feeds.ipID=ips.ID
+					ORDER BY rank DESC
+					LIMIT 0,20";
 			/*
 			$sql = "SELECT ID, message, latitude, longitude, likes, timestamp, 
 									((likes+0.1) / ( LN(TIMESTAMPDIFF(SECOND, feeds.timestamp, CURRENT_TIMESTAMP())) * POW(( 3959 * acos( cos( radians(".$curlat.") ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(".$curlong.") ) + sin( radians(".$curlat.") ) * sin( radians( latitude ) ) ) )+0.1,2))) AS rank  
@@ -109,7 +111,9 @@ class Feed extends CI_Controller
 					((1 / ((POW(( 3959 * acos( cos( radians(".$curlat.") ) * cos( radians( feeds.latitude ) ) * cos( radians( feeds.longitude ) - radians(".$curlong.") ) + sin( radians(".$curlat.") ) * sin( radians( feeds.latitude ) ) ) ),feeds.likes)) * (TIMESTAMPDIFF(SECOND, feeds.timestamp, CURRENT_TIMESTAMP())))) + (ips.user_likes/50)) AS rank
 					FROM feeds
 					INNER JOIN ips
-					ON feeds.ipID=ips.ID";
+					ON feeds.ipID=ips.ID
+					ORDER BY rank DESC
+					LIMIT 0,20";
 		$query = $this->db->query($sql);
 		
 		//$con=mysqli_connect("localhost","root","","freeforsale");
