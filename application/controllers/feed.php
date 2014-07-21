@@ -14,36 +14,29 @@ class Feed extends CI_Controller
 			$data['ipID'] = $row['ID'];
 			$curlong = $row['longitude'];
 			$curlat = $row['latitude'];
-			
-			//+0.1?
+
 			//Need to see if scalable.
+			$sql = "SELECT ips.user_likes, feeds.ID, feeds.message, feeds.latitude, feeds.longitude, feeds.likes, feeds.timestamp, 
+					((1 / ((POW(( 3959 * acos( cos( radians(".$curlat.") ) * cos( radians( feeds.latitude ) ) * cos( radians( feeds.longitude ) - radians(".$curlong.") ) + sin( radians(".$curlat.") ) * sin( radians( feeds.latitude ) ) ) ),feeds.likes)) * (TIMESTAMPDIFF(SECOND, feeds.timestamp, CURRENT_TIMESTAMP())))) + (ips.user_likes/50)) AS rank
+					FROM feeds
+					INNER JOIN ips
+					ON feeds.ipID=ips.ID";
+			/*
 			$sql = "SELECT ID, message, latitude, longitude, likes, timestamp, 
 									((likes+0.1) / ( LN(TIMESTAMPDIFF(SECOND, feeds.timestamp, CURRENT_TIMESTAMP())) * POW(( 3959 * acos( cos( radians(".$curlat.") ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(".$curlong.") ) + sin( radians(".$curlat.") ) * sin( radians( latitude ) ) ) )+0.1,2))) AS rank  
 									FROM feeds
 									ORDER BY rank DESC
 									LIMIT 0,20";
+			*/
 			//echo $sql;
 			//To search by kilometers instead of miles, replace 3959 with 6371.
 			$query = $this->db->query($sql);
 
 			$data['feeds'] = $query->result_array();
-			
-			//$ipID = $row['ID'];
+
 		}else{	//New User
 			$this->load->view('setup');
-			/*
-			$toinsert = array(
-			   'ip' => $ip
-			);		
-			$this->db->insert('ips', $toinsert);
-			$insert_id = $this->db->insert_id();			
-			$data['ipID'] = $insert_id;
-			//$ipID = $insert_id;
-			*/
 		}
-		
-		
-		
         $this->load->view('feed',$data);
     }
     
@@ -74,32 +67,35 @@ class Feed extends CI_Controller
 			echo "Inserted New IP Record";
 		}
 	}
+
 	
     public function add_feed()
-    {
+    { 
         $latitude = $this->input->post('latitude');
         $longitude = $this->input->post('longitude');
 		$message  = $this->input->post('message');
+		
+		$ip = $this->get_ip_id();
+		
         $data = array(
-           'message' => $message ,
-           'latitude' => $latitude ,
-           'longitude' => $longitude
+			'ipID' => $ip,
+			'message' => $message ,
+			'latitude' => $latitude ,
+			'longitude' => $longitude
         );
         $this->db->insert('feeds', $data); 
     }
 	
 	public function spread_feed($id)
 	{
-		//$ip = $this->get_client_ip();
-		$ip = $this->get_client_ip();
-		$query = $this->db->query("SELECT * FROM ips WHERE ip='".$ip."'");
-		$row = $query->row_array(); 
+		$ip = $this->get_ip_id();
+
 		$data = array(
-			'ipID' => $row['ID'],
+			'ipID' => $ip,
 			'feedID' => $id
 		);
 		$this->db->insert('likes', $data); 
-		
+		$query = $this->db->query("UPDATE ips SET user_likes=user_likes+1 WHERE ID='".$row['ID']."'");
 		$query = $this->db->query("UPDATE feeds SET likes=likes+1 WHERE ID='".$id."'");
 	}
 	
@@ -107,17 +103,13 @@ class Feed extends CI_Controller
 	{
 		$curlong = $this->input->post('longitude');
 		$curlat = $this->input->post('latitude');
-		$ip = $this->get_client_ip();
-		$query = $this->db->query("SELECT * FROM ips WHERE ip='".$ip."'");	
-		$row = $query->row_array(); 
-		$ipID = $row['ID'];
-			//+0.1?
-			//Need to see if scalable.
-		$sql = "SELECT ID, message, latitude, longitude, likes, timestamp, 
-								((likes+0.1) / ( LN(TIMESTAMPDIFF(SECOND, feeds.timestamp, CURRENT_TIMESTAMP())) * POW(( 3959 * acos( cos( radians(".$curlat.") ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(".$curlong.") ) + sin( radians(".$curlat.") ) * sin( radians( latitude ) ) ) )+0.1,2))) AS rank  
-								FROM feeds
-								ORDER BY rank DESC
-								LIMIT 0,20";
+		$ipID = $this->get_ip_id();
+
+		$sql = "SELECT ips.user_likes, feeds.ID, feeds.message, feeds.latitude, feeds.longitude, feeds.likes, feeds.timestamp, 
+					((1 / ((POW(( 3959 * acos( cos( radians(".$curlat.") ) * cos( radians( feeds.latitude ) ) * cos( radians( feeds.longitude ) - radians(".$curlong.") ) + sin( radians(".$curlat.") ) * sin( radians( feeds.latitude ) ) ) ),feeds.likes)) * (TIMESTAMPDIFF(SECOND, feeds.timestamp, CURRENT_TIMESTAMP())))) + (ips.user_likes/50)) AS rank
+					FROM feeds
+					INNER JOIN ips
+					ON feeds.ipID=ips.ID";
 		$query = $this->db->query($sql);
 		
 		//$con=mysqli_connect("localhost","root","","freeforsale");
@@ -141,6 +133,13 @@ class Feed extends CI_Controller
 					echo '</div>';
 		}
 
+	}
+	
+	public function get_ip_id(){
+		$ip = $this->get_client_ip();
+		$query = $this->db->query("SELECT * FROM ips WHERE ip='".$ip."'");	
+		$row = $query->row_array(); 
+		return $row['ID'];
 	}
 	
 	public function get_client_ip() {
