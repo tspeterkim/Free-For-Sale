@@ -7,7 +7,7 @@ $('#setup_button').click(function(){
 		type: 'POST',
 		data: {latitude: latitude, longitude: longitude},
 		success: function(data){
-			alert("Successfully Updated!");
+			//alert("Successfully Updated!");
 			window.location.replace("http://localhost/index.php/feed/");
 		}
 	});
@@ -18,6 +18,7 @@ function getLocation(){
 		//alert("Geo");
 		navigator.geolocation.getCurrentPosition(showMap, showError);
 	} else {
+		//Display geolocation not supported page
 		alert("Geolocation is not supported by this browser.");
 	}
 }
@@ -31,7 +32,7 @@ function showMap(position) {
 		data: {latitude: position.coords.latitude, longitude: position.coords.longitude},
 		context: this,
 		success: function(data){
-			alert(data);
+			//alert(data);
 		}
 	});
 }
