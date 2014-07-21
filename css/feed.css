@@ -21,6 +21,10 @@ button{
 	font-family: 'Lobster', cursive;
 }
 
+#char_counter{
+	color:grey;
+}
+
 #feed_submit_button{
 	float:right;
 	padding-left:14px;

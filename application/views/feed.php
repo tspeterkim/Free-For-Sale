@@ -10,7 +10,9 @@
 		<div id="container">
 			<div id="main_title">Spread The Word</div>
 			<textarea autofocus placeholder="Spread a new word..." maxlength="500" id="feed_input_textarea" ></textarea>
-			<br/><button id="feed_submit_button" class="pure-button pure-button-primary">Post</button>
+			<br/>
+			<span id="char_counter">500</span>
+			<button id="feed_submit_button" class="pure-button pure-button-primary">Post</button>
 			<hr/>
 			<span id="loading_image"></span>
 			<div id="feed_city_information">&nbsp;
