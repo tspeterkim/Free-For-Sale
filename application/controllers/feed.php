@@ -34,7 +34,13 @@ class Feed extends CI_Controller
 			//To search by kilometers instead of miles, replace 3959 with 6371.
 			$query = $this->db->query($sql);
 
+			
+			
 			$data['feeds'] = $query->result_array();
+			
+			$query = $this->db->query("SELECT * FROM ips WHERE ID='".$row['ID']."'");
+			$row2 = $query->row_array();
+			$data['user_level'] = floor($row2['user_likes']/50);
 
 		}else{	//New User
 			$this->load->view('setup');

@@ -19,6 +19,29 @@ a:active {color:#07c;}  /* selected link */
 	text-align:center;
 }
 
+#setup_step2{
+	display:none;
+}
+
+#loli_icon{
+	height:25px;
+	vertical-align:middle;
+}
+
+#celebrate{
+	font-family: 'Lobster', cursive;
+}
+
+.setup_checks{
+	display:none;
+	height:50px;
+	vertical-align:bottom;
+}
+
+.setup_contents{
+	clear:right;
+}
+
 .setup_steps{
 	font-size:25px;
 	background: #fff;

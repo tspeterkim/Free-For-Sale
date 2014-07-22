@@ -7,8 +7,9 @@ $('#setup_button').click(function(){
 		type: 'POST',
 		data: {latitude: latitude, longitude: longitude},
 		success: function(data){
-			//alert("Successfully Updated!");
-			window.location.replace("http://localhost/index.php/feed/");
+			$("#setup_check1").fadeIn("slow");
+			$("#setup_step2").fadeIn("slow");
+			var n = noty({text: 'Success in setting up your location',type:'information',timeout:2000,layout:'topRight'});
 		}
 	});
 });

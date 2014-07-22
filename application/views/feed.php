@@ -2,6 +2,7 @@
 	<head>
 		<title>Spread the word</title>
 		<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="/css/tooltipster.css" />
 		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
 		<link rel="stylesheet" type="text/css" href="/css/feed.css">
@@ -13,13 +14,14 @@
 			<br/>
 			<span id="char_counter">500</span>
 			<button id="feed_submit_button" class="pure-button pure-button-primary">Post</button>
+			<div id="user_level">
+				Your informant level is <b><?php echo $user_level; ?></b>
+				<img src="/images/help.png" id="help_icon" class="tooltip"/>
+			</div>
 			<hr/>
 			<span id="loading_image"></span>
 			<div id="feed_city_information">&nbsp;
-				<button onclick="refresh_feed()" id="refresh_button">
-				<i class="fa fa-refresh"></i>
-				Refresh
-				</button>
+				Fetching your location...
 			</div>
 
 			<div id="feed_main_div">
@@ -51,6 +53,7 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> 
 		<script type="text/javascript" src="/js/noty/packaged/jquery.noty.packaged.min.js"></script>
+		<script type="text/javascript" src="/js/jquery.tooltipster.min.js"></script>
 		<script src="/js/spin.min.js"></script>
 		<script src="/js/jquery.autosize.min.js"></script>
 		<script src="/js/feed.js"></script>

@@ -1,3 +1,16 @@
+.tooltipster-light {
+	border-radius: 5px; 
+	border: 1px solid #cccccc;
+	background: #fff;
+	color: #0078c9;
+}
+.tooltipster-light .tooltipster-content {
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	line-height: 16px;
+	padding: 8px 10px;
+}
+
 html
 {
 	background-color:#e9eaed;
@@ -34,6 +47,25 @@ button{
 	margin-top:4px;
 }
 
+#user_level{
+	clear:right;
+	display:none;
+	text-align:center;
+	position:relative;
+	bottom:25px;
+	margin:0;
+}
+
+#help_icon{
+	width:24px;
+	height:24px;
+	vertical-align:bottom;
+}
+
+#level_help_button{
+
+}
+
 #refresh_button{
 	float:right;
 }
@@ -55,7 +87,7 @@ hr {
 	border: 0;
 	height: 1px;
 	background: #333;
-	margin-top:50px;
+	margin-top:20px;
 	background-image: -webkit-linear-gradient(left, #ccc, #333, #ccc);
 	background-image: -moz-linear-gradient(left, #ccc, #333, #ccc);
 	background-image: -ms-linear-gradient(left, #ccc, #333, #ccc);
