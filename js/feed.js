@@ -26,8 +26,10 @@ $('#feed_submit_button').click(function(){
 $('.tooltip').tooltipster({contentAsHTML:true,maxWidth:400,content: 'For every <b>50</b> likes you get on a word, your informant level goes up by <b>1</b>. The higer your informant level is, the more likely your words are gonna get heard by others.',theme:'tooltipster-light'});
 
 $("#feed_input_textarea").focus(function(){
+	$("hr").css('margin-top','-16px');
 	$("#user_level").show();
 }).blur(function(){
+	$("hr").css('margin-top','20px');
 	$("#user_level").hide();
 });
 

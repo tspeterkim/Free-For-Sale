@@ -15,7 +15,7 @@
 			<span id="char_counter">500</span>
 			<button id="feed_submit_button" class="pure-button pure-button-primary">Post</button>
 			<div id="user_level">
-				Your informant level is <b><?php echo $user_level; ?></b>
+				Your informant level is <b><?php echo $user_level; ?></b>&nbsp;
 				<img src="/images/help.png" id="help_icon" class="tooltip"/>
 			</div>
 			<hr/>
