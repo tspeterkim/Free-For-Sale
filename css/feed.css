@@ -14,7 +14,7 @@
 html
 {
 	background-color:#e9eaed;
-	font-family: arial;
+	font-family: 'Open Sans', sans-serif;
 }
 
 #container{
@@ -28,6 +28,11 @@ button{
 	font-family:arial;
 }
 
+#title_icon{
+	height: 60px;
+	vertical-align: middle;
+}
+
 #main_title{
 	font-size:44px;
 	margin-bottom:25px;
@@ -37,6 +42,7 @@ button{
 
 #char_counter{
 	color:grey;
+	margin-left:10px;
 }
 
 #feed_submit_button{

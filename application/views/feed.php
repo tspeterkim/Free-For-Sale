@@ -1,6 +1,8 @@
 <html>
 	<head>
-		<title>Spread the word</title>
+		<title>Spread The Word</title>
+		<link rel="icon" href="<?php echo base_url()?>/favicon.ico" type="image/ico">
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="/css/tooltipster.css" />
 		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
@@ -9,7 +11,10 @@
 	</head>
 	<body>
 		<div id="container">
-			<div id="main_title">Spread The Word</div>
+			<div id="main_title">
+				<img src="/images/favicon.png" id="title_icon"/>
+				Spread The Word
+			</div>
 			<textarea autofocus placeholder="Spread a new word..." maxlength="500" id="feed_input_textarea" ></textarea>
 			<br/>
 			<span id="char_counter">500</span>

@@ -1,12 +1,17 @@
 html{
 	background-color:#e9eaed;
-	font-family: arial;
+	font-family: 'Open Sans', sans-serif;
 }
 
 a{color:#07c; text-decoration:none;}      /* unvisited link */
 a:visited {color:#07c;}  /* visited link */
 a:hover {color:#07c; text-decoration:underline;}  /* mouse over link */
 a:active {color:#07c;}  /* selected link */
+
+#title_icon{
+	height: 70px;
+	vertical-align: middle;
+}
 
 #welcome_message{
 	font-size:60px;

@@ -1,15 +1,19 @@
 <html>
 	<head>
 		<title>Spread The Word - Set Up</title>
+		<link rel="icon" href="<?php echo base_url()?>/favicon.ico" type="image/ico">
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
-		<link href='http://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
 		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
 		<link rel="stylesheet" type="text/css" href="/css/setup.css">
 	</head>
 	<body>
 		<div id="container">
-			<div id="welcome_message">Get Started</div>
+			<div id="welcome_message">
+				<img src="/images/favicon.png" id="title_icon"/>
+				Get Started
+			</div>
 			<div class="setup_steps" id="setup_step1">
 				<div class="steps_header">Step <b>1</b>
 				<img id="setup_check1" src="/images/check.png" class="setup_checks" />
