@@ -33,6 +33,10 @@ $("#feed_input_textarea").focus(function(){
 	$("#user_level").hide();
 });
 
+$("#user_level").click(function(){
+	$("#feed_input_textarea").focus();
+});
+
 $.fn.extend( {
 	limiter: function(limit, elem) {
 		$(this).on("keyup focus", function() {
@@ -96,7 +100,9 @@ $('#refresh_button').click(function(){
 	
 });
 */
-$('.like_buttons').click(function(e){
+
+$(document).on('click', '.like_buttons', function (e) {
+	e.preventDefault();
 	var itemname = $(this).parent().attr('id');
 	var id = itemname.substr(10);
 	//alert(id);
@@ -107,11 +113,13 @@ $('.like_buttons').click(function(e){
 		success: function(data){
 			//alert("Successfully Spread!");
 			$(this).hide();
+			var prev_likecount = $(this).siblings(".likecount_spans").children("span").html();
+			$(this).siblings(".likecount_spans").children("span").html(parseInt(prev_likecount)+1);
 			$(this).parent().append('<span class="afterlike_messages">The word has been spread!</span>');
 		}
 	});
-	
 });
+
 
 function refresh_feed(){
 	//show loading gif

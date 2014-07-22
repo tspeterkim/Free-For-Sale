@@ -32,6 +32,7 @@ button{
 	font-size:44px;
 	margin-bottom:25px;
 	font-family: 'Lobster', cursive;
+	color:#0078e7;
 }
 
 #char_counter{
@@ -81,6 +82,10 @@ button{
 	font-family: inherit;
 	font-size: inherit;
 	padding:12px;
+}
+
+b{
+	color:#0078e7;
 }
 
 hr {

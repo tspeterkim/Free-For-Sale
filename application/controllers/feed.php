@@ -1,7 +1,6 @@
 <?php
 class Feed extends CI_Controller
 {
-	//$ipID = "";
     public function index()
     {
 		//$query = $this->db->query("SELECT * FROM feeds");
@@ -47,7 +46,7 @@ class Feed extends CI_Controller
 		}
         $this->load->view('feed',$data);
     }
-    
+	
 	public function add_ip(){
 		$latitude = $this->input->post('latitude');
         $longitude = $this->input->post('longitude');
@@ -103,8 +102,11 @@ class Feed extends CI_Controller
 			'feedID' => $id
 		);
 		$this->db->insert('likes', $data); 
-		$query = $this->db->query("UPDATE ips SET user_likes=user_likes+1 WHERE ID='".$row['ID']."'");
+		
 		$query = $this->db->query("UPDATE feeds SET likes=likes+1 WHERE ID='".$id."'");
+		$query = $this->db->query("SELECT * FROM feeds WHERE ID='".$id."'");
+		$row = $query->row_array(); 
+		$query = $this->db->query("UPDATE ips SET user_likes=user_likes+1 WHERE ID='".$row['ipID']."'");
 	}
 	
 	public function refresh_feed()
