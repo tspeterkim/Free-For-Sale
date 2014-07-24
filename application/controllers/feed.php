@@ -40,6 +40,14 @@ class Feed extends CI_Controller
 			$query = $this->db->query("SELECT * FROM ips WHERE ID='".$row['ID']."'");
 			$row2 = $query->row_array();
 			$data['user_level'] = floor($row2['user_likes']/50);
+			
+			$query = $this->db->query("SELECT * FROM feeds WHERE ipID='".$row['ID']."' ORDER BY timestamp DESC LIMIT 0,20");
+			$data['num_mywords'] = $query->num_rows();
+			$data['myfeeds'] = $query->result_array();
+			
+			$query = $this->db->query("SELECT * FROM feeds INNER JOIN likes ON likes.feedID=feeds.ID AND likes.ipID='".$row['ID']."' ORDER BY likes.timestamp DESC LIMIT 0,20");
+			$data['num_myspreads'] = $query->num_rows();
+			$data['myspreads'] = $query->result_array();
 
 		}else{	//New User
 			$this->load->view('setup');

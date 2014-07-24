@@ -2,10 +2,9 @@ $('#feed_input_textarea').autosize();
 
 $('#feed_submit_button').click(function(){
 	var message = $('#feed_input_textarea').val();
-	$('#feed_input_textarea').val('');
-	$('#feed_input_textarea').focus();
+	
 	if(!message.trim()){	//is empty or whitespace
-		alert("Can't be empty!");
+		var n = noty({text: 'You have to spread something. With words.',type:'information',timeout:2000,layout:'topRight'});
 	}else{
 		var latitude = $('#input_lat_hidden').val();
 		var longitude = $('#input_long_hidden').val();
@@ -16,11 +15,14 @@ $('#feed_submit_button').click(function(){
 			data: {latitude: latitude, longitude: longitude, message: message},
 			success: function(data){
 				//alert("Success!");
-				var n = noty({text: 'You spreaded a new word',type:'information',timeout:2000,layout:'topRight'});
+				var n = noty({text: 'You spread a new word',type:'information',timeout:2000,layout:'topRight'});
+				refresh_feed();
 				refresh_feed();
 			}
 		});
 	}
+	$('#feed_input_textarea').val('');
+	$('#feed_input_textarea').focus();
 });
 
 $('.tooltip').tooltipster({contentAsHTML:true,maxWidth:400,content: 'For every <b>50</b> likes you get on a word, your informant level goes up by <b>1</b>. The higer your informant level is, the more likely your words are gonna get heard by others.',theme:'tooltipster-light'});
@@ -33,8 +35,17 @@ $("#feed_input_textarea").focus(function(){
 	$("#user_level").hide();
 });
 
-$("#user_level").click(function(){
-	$("#feed_input_textarea").focus();
+var rtvar = 0;
+$(".my_open_toggles").click(function(e){
+	if(rtvar==0){
+		$(this).siblings(".my_lists").show();
+		$(this).children("img").rotate({animateTo:90,duration:700});
+		rtvar = 1;
+	}else{
+		$(this).siblings(".my_lists").hide();
+		$(this).children("img").rotate({animateTo:360,duration:700});
+		rtvar = 0;
+	}
 });
 
 $.fn.extend( {

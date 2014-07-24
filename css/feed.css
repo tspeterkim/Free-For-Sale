@@ -61,6 +61,7 @@ button{
 	position:relative;
 	bottom:25px;
 	margin:0;
+	z-index:-1;
 }
 
 #help_icon{
@@ -69,8 +70,39 @@ button{
 	vertical-align:bottom;
 }
 
-#level_help_button{
+.arrow_right_icons{
+	height:20px;
+	vertical-align:middle;
+}
 
+.my_lists{
+	display:none;
+}
+
+.my_lists > .feed_items{
+	margin-top:9px;
+	position:relative;
+	left:-13px;
+}
+
+.my_open_toggles
+{
+	background:white;
+	/*border-bottom:1px solid #07c;*/
+}
+
+.my_open_toggles:hover
+{
+	cursor:pointer;
+	/*border-bottom: 1px solid #00CED1;*/
+}
+
+.my_stuff_mains{
+	background: #fff;
+	border: 1px solid;
+	border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+	width: 484px;
+	padding:12px;
 }
 
 #refresh_button{
